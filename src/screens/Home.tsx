@@ -5,22 +5,22 @@ import { Group } from "@components/Group";
 import { HomeHeader } from "@components/HomeHeader";
 import { ExerciseCard } from "@components/ExerciseCard";
 
+const groups = [
+  'costas',
+  'peito',
+  'ombro',
+  'bíceps/tríceps',
+  'pernas',
+];
+
+const exercisesList = [
+  'Puxada frontal',
+  'Remada curvada',
+  'Remada unilateral',
+  'Levantamento terra',
+]
+
 export function Home() {
-  const groups = [
-    'costas',
-    'peito',
-    'ombro',
-    'bíceps/tríceps',
-    'pernas',
-  ];
-
-  const exercisesList = [
-    'Puxada frontal',
-    'Remada curvada',
-    'Remada unilateral',
-    'Levantamento terra',
-  ]
-
   const [group, setGroup] = useState(groups);
   const [exercises, setExercises] = useState(exercisesList)
   const [groupSelected, setGroupSelected] = useState('costas');
