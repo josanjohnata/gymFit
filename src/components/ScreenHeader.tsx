@@ -1,4 +1,4 @@
-import { Center, Heading } from "native-base";
+import { Center, Heading } from 'native-base';
 
 type ScreenHeaderProps = {
   title: string;

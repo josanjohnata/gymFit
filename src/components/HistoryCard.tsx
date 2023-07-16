@@ -1,4 +1,4 @@
-import { HStack, Heading, Text, VStack } from "native-base";
+import { HStack, Heading, Text, VStack } from 'native-base';
 
 export function HistoryCard() {
   return (
