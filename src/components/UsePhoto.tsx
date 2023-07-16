@@ -1,4 +1,4 @@
-import { Image, IImageProps } from "native-base";
+import { Image, IImageProps } from 'native-base';
 
 type UsePhotoProps = IImageProps & {
   size: number;

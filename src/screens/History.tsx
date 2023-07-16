@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Heading, VStack, SectionList, Text, Center } from "native-base";
+import { useState } from 'react';
+import { Heading, VStack, SectionList, Text, Center } from 'native-base';
 
-import { ScreenHeader } from "@components/ScreenHeader";
-import { HistoryCard } from "@components/HistoryCard";
+import { ScreenHeader } from '@components/ScreenHeader';
+import { HistoryCard } from '@components/HistoryCard';
 
 const lastExercises = [
   {
