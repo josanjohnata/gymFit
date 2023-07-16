@@ -1,4 +1,4 @@
-import { Button as ButtonNativeBase, Text, IButtonProps } from "native-base";
+import { Button as ButtonNativeBase, Text, IButtonProps } from 'native-base';
 
 type Props = IButtonProps & {
   title: string
