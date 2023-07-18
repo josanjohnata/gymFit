@@ -34,7 +34,6 @@ export function Profile() {
 
       if(photoSelected.assets[0].uri) {
         const photoInfo = await FileSystem.getInfoAsync(photoSelected.assets[0].uri);
-console.log(photoInfo);
 
         if(photoInfo.size && (photoInfo.size / 1024 / 1024) > 10) {
           return toast.show({
@@ -108,6 +107,7 @@ console.log(photoInfo);
           <Heading
             color='gray.200'
             fontSize='md'
+            fontFamily='heading'
             mb={2}
             mt={12}
             alignSelf='flex-start'
