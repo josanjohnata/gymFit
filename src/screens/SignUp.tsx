@@ -4,11 +4,15 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import axios from 'axios';
+import { api } from '@services/api';
+
 import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
 
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
+import { Alert } from 'react-native';
 
 type FormDataProps = {
   name: string;
@@ -36,18 +40,15 @@ export function SignUp() {
   };
 
   const handleSingUp = async ({ name, email, password }: FormDataProps) => {
-    const response = await fetch('http://127.0.0.1:3333/users', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, password })
-    });
 
-    const data = await response.json();
-    console.log(data)
-  };
+    try {
+      const response = await api.post('/users', { name, email, password });
+      console.log(response.data)
+    } catch (error) {
+      if(axios.isAxiosError(error))
+      Alert.alert(error.response?.data.message);
+    }
+  }
   
   return (
     <ScrollView
