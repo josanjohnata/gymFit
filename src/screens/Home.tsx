@@ -1,6 +1,10 @@
-import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { FlatList, HStack, Heading, VStack, Text } from "native-base";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { FlatList, HStack, Heading, VStack, Text, useToast } from "native-base";
+
+import { api } from '@services/api';
+import { AppError } from "@utils/APPERROR";
+import { ExerciseDTO } from "@dtos/ExerciseDTO";
 
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
@@ -8,31 +12,59 @@ import { Group } from "@components/Group";
 import { HomeHeader } from "@components/HomeHeader";
 import { ExerciseCard } from "@components/ExerciseCard";
 
-const groups = [
-  'costas',
-  'peito',
-  'ombro',
-  'bíceps/tríceps',
-  'pernas',
-];
-
-const exercisesList = [
-  'Puxada frontal',
-  'Remada curvada',
-  'Remada unilateral',
-  'Levantamento terra',
-]
-
 export function Home() {
-  const [group, setGroup] = useState(groups);
-  const [exercises, setExercises] = useState(exercisesList)
+  const [group, setGroup] = useState<string[]>([]);
+  const [exercises, setExercises] = useState<ExerciseDTO[]>([])
   const [groupSelected, setGroupSelected] = useState('costas');
 
+  const toast = useToast();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const handleOpenExerciseDetails = () => {
     navigation.navigate('exercise')
   };
+
+  const fetchGroups = async () => {
+    try {
+      const response = await api.get('/groups');
+      setGroup(response.data);
+
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi passível carregar os grupos musculares.';
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
+      })
+    }
+  }
+
+  const fetchExercisesByGroup = async () => {
+    try {
+      const response = await api.get(`/exercises/bygroup/${groupSelected}`);
+      setExercises(response.data);
+
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi passível carregar os exercícios.';
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
+      })
+    }
+  }
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
+  useFocusEffect(useCallback(() => {
+    fetchExercisesByGroup();
+  }, [groupSelected]));
 
   return (
     <VStack flex={1}>
@@ -73,7 +105,7 @@ export function Home() {
 
         <FlatList
           data={exercises}
-          keyExtractor={item => item}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <ExerciseCard
               onPress={handleOpenExerciseDetails}
