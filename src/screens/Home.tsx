@@ -17,13 +17,13 @@ export function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [group, setGroup] = useState<string[]>([]);
   const [exercises, setExercises] = useState<ExerciseDTO[]>([])
-  const [groupSelected, setGroupSelected] = useState('costas');
+  const [groupSelected, setGroupSelected] = useState('antebraço');
 
   const toast = useToast();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
-  const handleOpenExerciseDetails = () => {
-    navigation.navigate('exercise')
+  const handleOpenExerciseDetails = (exerciseId: string) => {
+    navigation.navigate('exercise', { exerciseId })
   };
 
   const fetchGroups = async () => {
@@ -116,7 +116,7 @@ export function Home() {
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <ExerciseCard
-                onPress={handleOpenExerciseDetails}
+                onPress={() => handleOpenExerciseDetails(item.id)}
                 data={item}
               />
             )}
