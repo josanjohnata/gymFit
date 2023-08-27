@@ -1,22 +1,44 @@
-import { useState } from 'react';
-import { Heading, VStack, SectionList, Text, Center } from 'native-base';
+import { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { Heading, VStack, SectionList, Text, useToast } from 'native-base';
 
 import { ScreenHeader } from '@components/ScreenHeader';
 import { HistoryCard } from '@components/HistoryCard';
 
-const lastExercises = [
-  {
-    title: '26.08.23',
-    data: ['Puxada frontal', 'Remada unilateral']
-  },
-  {
-    title: '27.08.23',
-    data: ['Supino reto']
-  },
-];
+import { api } from '@services/api';
+import { HistoryByDayDTO } from '@dtos/HistoryByDayDTO';
+
+import { AppError } from '@utils/APPERROR';
 
 export function History() {
-  const [sectionExercises, setSectionExercises] = useState(lastExercises);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sectionExercises, setSectionExercises] = useState<HistoryByDayDTO[]>([]);
+
+  const toast = useToast();
+
+  const fetchHistory = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.get('/history');
+      setSectionExercises(response.data);
+      
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi possível carregar o histórico.';
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useFocusEffect(useCallback(() => {
+    fetchHistory();
+  }, []));
 
   return (
     <VStack flex={1}>
@@ -26,10 +48,8 @@ export function History() {
 
       <SectionList
         sections={sectionExercises}
-        keyExtractor={item => item}
-        renderItem={({ item }) => (
-          <HistoryCard />
-        )}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => <HistoryCard data={item} />}
         renderSectionHeader={({ section }) => (
           <Heading
             color='gray.200'
