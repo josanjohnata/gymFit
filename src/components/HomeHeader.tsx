@@ -4,6 +4,8 @@ import { HStack, VStack, Heading, Text, Icon } from 'native-base';
 
 import { useAuth } from '@hooks/useAuth';
 
+import { api } from '@services/api';
+
 import defaultUserPhotoImg from '@assets/userPhotoDefault.png';
 
 import { UsePhoto } from './UsePhoto';
@@ -20,7 +22,11 @@ export function HomeHeader() {
       alignItems='center'
     >
       <UsePhoto
-      source={user.avatar ? { uri: user.avatar } : defaultUserPhotoImg }
+      source={
+        user.avatar
+        ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` }
+        : defaultUserPhotoImg
+      }
       alt='Imagem do usuário'
       size={16}
       mr={4}
