@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 
 import { AppError } from '@utils/APPERROR';
-import { storageAuthTokeGet } from '@storage/storageAuthToken';
+import { storageAuthTokeGet, storageAuthTokeSave } from '@storage/storageAuthToken';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type SignOut = () => void;
 
@@ -48,7 +49,39 @@ api.registerInterceptTokenManager = signOut => {
               })
             })
           }
-          isRefreshing = true
+          isRefreshing = true;
+
+          return new Promise(async (resolve, reject) => {
+            try {
+              const { data } = await api.post('/sessions/refresh-token', { refresh_token });
+              await storageAuthTokeSave({ token: data.token, refresh_token: data.refresh_token });
+
+              if(originalRequestConfig) {
+                originalRequestConfig.data = JSON.parse(originalRequestConfig.data);
+              }
+
+              originalRequestConfig.headers = { 'authorization': `Bearer ${data.token}` };
+              api.defaults.headers.common['authorization'] = `Bearer ${data.token}`;
+
+              failedQueue.forEach(request => {
+                request.onSuccess(data.token);
+              });
+
+              resolve(api(originalRequestConfig));
+              
+            } catch (error: any) {
+              failedQueue.forEach(request => {
+                request.onFailure(error);
+              });
+
+              signOut();
+              reject(error);
+              
+            } finally {
+              isRefreshing = false;
+              failedQueue = [];
+            }
+          });
         }
 
         signOut();
