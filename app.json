@@ -29,10 +29,19 @@
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.josanjohnata.gymFit"
     },
     "web": {
       "favicon": ""
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b1691ad9-d329-4e09-9dfc-f565139b5ea4"
+      }
     }
   }
 }

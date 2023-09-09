@@ -2,7 +2,6 @@ import axios, { AxiosError, AxiosInstance } from 'axios';
 
 import { AppError } from '@utils/APPERROR';
 import { storageAuthTokeGet, storageAuthTokeSave } from '@storage/storageAuthToken';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 type SignOut = () => void;
 
