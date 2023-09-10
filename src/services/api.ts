@@ -15,7 +15,7 @@ type APIInstanceProps = AxiosInstance & {
 };
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:3333'
+  baseURL: 'https://nodedeploy-api-pkhu.onrender.com'
 }) as APIInstanceProps;
 
 let failedQueue: Array<PromiseType> = [];
