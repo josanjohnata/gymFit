@@ -4,6 +4,9 @@ import { useTheme } from "native-base";
 import { createBottomTabNavigator, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 import { Home } from "@screens/Home";
+import { Training } from "@screens/Training";
+import { PhysicalAssessment } from "@screens/PhysicalAssessment";
+import { Consultancy } from "@screens/Consultancy";
 import { History } from "@screens/History";
 import { Profile } from "@screens/Profile";
 import { Exercise } from "@screens/Exercise";
@@ -14,6 +17,9 @@ import ProfileSvg from '@assets/profile.svg';
 
 type TAppRoutes = {
   home: undefined;
+  training: undefined;
+  physicalAssessment: undefined;
+  consultancy: undefined;
   history: undefined;
   profile: undefined;
   exercise: {
@@ -72,8 +78,18 @@ export function AppRoutes() {
         }}
       />
       <Screen
-        name="exercise"
-        component={Exercise}
+        name="training"
+        component={Training}
+        options={{ tabBarButton: () => null }}
+      />
+      <Screen
+        name="physicalAssessment"
+        component={PhysicalAssessment}
+        options={{ tabBarButton: () => null }}
+      />
+      <Screen
+        name="consultancy"
+        component={Consultancy}
         options={{ tabBarButton: () => null }}
       />
     </Navigator>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { FlatList, HStack, Heading, VStack, Text, useToast } from "native-base";
+import {  HStack, Heading, VStack, useToast, Icon } from "native-base";
 
 import { api } from '@services/api';
 import { AppError } from "@utils/APPERROR";
@@ -8,11 +8,12 @@ import { ExerciseDTO } from "@dtos/ExerciseDTO";
 
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
-import { HomeHeader } from "@components/HomeHeader";
-import { Loading } from "@components/Loading";
-import { Button } from "@components/Button";
+import { Feather } from '@expo/vector-icons';
 
-export function Home() {
+import { Loading } from "@components/Loading";
+import { TouchableOpacity } from "react-native";
+
+export function Consultancy() {
   const [isLoading, setIsLoading] = useState(true);
   const [group, setGroup] = useState<string[]>([]);
   const [exercises, setExercises] = useState<ExerciseDTO[]>([])
@@ -20,18 +21,6 @@ export function Home() {
 
   const toast = useToast();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
-
-  const handleOpenTraining = () => {
-    navigation.navigate('training')
-  };
-
-  const handleOpenPhysicalAssessment = () => {
-    navigation.navigate('physicalAssessment')
-  };
-
-  const handleOpenConsultancy = () => {
-    navigation.navigate('consultancy')
-  };
 
   const fetchGroups = async () => {
     try {
@@ -71,6 +60,10 @@ export function Home() {
     }
   }
 
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   useEffect(() => {
     fetchGroups();
   }, []);
@@ -81,16 +74,41 @@ export function Home() {
 
   return (
     <VStack flex={1}>
-      <HomeHeader />
       {
         isLoading ? <Loading /> :
        <>
         <VStack flex={1} px={8} mt={50}>
-          <Button mt={50} title="Avaliação Física" onPress={() => handleOpenPhysicalAssessment()}/>
+          <VStack
+            px={8}
+            bg='gray.600'
+            pt={12}
+          >
+            <TouchableOpacity
+              onPress={handleGoBack}
+            >
+              <Icon as={Feather}
+                name='arrow-left'
+                color='green.500'
+                size={6}
+              />
+            </TouchableOpacity>
 
-          <Button mt={50} title="Treino" onPress={() => handleOpenTraining()}/>
-
-          <Button mt={50} title="Assessoria" onPress={() => handleOpenConsultancy()}/>
+            <HStack
+              justifyContent='space-between'
+              alignItems='center'
+              mt={4}
+              mb={8}
+            >
+              <Heading
+                color='gray.100'
+                fontSize='lg'
+                flexShrink={1}
+                fontFamily='heading'
+              >
+                Assessoria
+              </Heading>
+            </HStack>
+          </VStack>
         </VStack>
       </>
       }
