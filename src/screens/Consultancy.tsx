@@ -88,7 +88,7 @@ export function Consultancy() {
             >
               <Icon as={Feather}
                 name='arrow-left'
-                color='green.500'
+                color='blue.500'
                 size={6}
               />
             </TouchableOpacity>

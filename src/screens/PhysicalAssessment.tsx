@@ -12,8 +12,6 @@ import { Feather } from '@expo/vector-icons';
 
 import { Loading } from "@components/Loading";
 import { TouchableOpacity } from "react-native";
-import { Frequency } from "./Frequency";
-import { FrequencyDay } from "@components/FrequencyDay";
 
 export function PhysicalAssessment() {
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +88,7 @@ export function PhysicalAssessment() {
             >
               <Icon as={Feather}
                 name='arrow-left'
-                color='green.500'
+                color='blue.500'
                 size={6}
               />
             </TouchableOpacity>
@@ -114,7 +112,6 @@ export function PhysicalAssessment() {
         </VStack>
       </>
       }
-      <FrequencyDay date='03-06-2024' />
     </VStack>
   );
 };

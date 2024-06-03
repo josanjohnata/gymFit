@@ -115,7 +115,7 @@ export function Profile() {
         toast.show({
           title: 'Foto atualizada!',
           placement: 'top',
-          bgColor: 'green.500'
+          bgColor: 'blue.500'
         });
       }
     } catch (error) {
@@ -139,7 +139,7 @@ export function Profile() {
       toast.show({
         title: 'Perfil atualizado com sucesso!',
         placement: 'top',
-        bgColor: 'green.500'
+        bgColor: 'blue.500'
       })
 
     } catch (error) {
@@ -192,7 +192,7 @@ export function Profile() {
             onPress={handleUserPhotoSelect}
           >
             <Text
-              color='green.500'
+              color='blue.500'
               fontWeight='bold'
               fontSize='md'
               mt={2}

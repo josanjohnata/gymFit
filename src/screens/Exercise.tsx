@@ -65,7 +65,7 @@ export function Exercise() {
       toast.show({
         title: 'Parabéns! Exercício registrado no seu histórico.',
         placement: 'top',
-        bgColor: 'green.700'
+        bgColor: 'blue.700'
       });
 
       navigation.goBack();
@@ -100,7 +100,7 @@ export function Exercise() {
         >
           <Icon as={Feather}
             name='arrow-left'
-            color='green.500'
+            color='blue.500'
             size={6}
           />
         </TouchableOpacity>

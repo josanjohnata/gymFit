@@ -40,7 +40,7 @@ export function AppRoutes() {
     <Navigator screenOptions={{
       headerShown: false,
       tabBarShowLabel: false,
-      tabBarActiveTintColor: colors.green[500],
+      tabBarActiveTintColor: colors.blue[500],
       tabBarInactiveTintColor: colors.gray[200],
       tabBarStyle: {
         backgroundColor: colors.gray[600],
